@@ -29,6 +29,17 @@ public class Map {
 		this.playerPosY = 2;
 		//TO-DO build map layout
 		this.mapRep[this.playerPosX][this.playerPosY] = PLAYER; 
+		for(int i = 0;i<6;i++){
+			this.mapRep[0][i] = UNMOVABLE;
+			this.mapRep[5][i] = UNMOVABLE;
+			this.mapRep[i][0] = UNMOVABLE;
+			this.mapRep[i][5] = UNMOVABLE;
+		}
+		this.mapRep[2][3] = BOX;
+		this.mapRep[2][4] =	BOX;
+		
+		this.mapRep[4][3] = EMPTY_GOAL;
+		this.mapRep[4][4] = EMPTY_GOAL;
 	}
 	/**
 	 * Checks if move in given direction is possible 
@@ -36,20 +47,70 @@ public class Map {
 	 * @return int depending on movement
 	 */
 	public int checkMove(String direction){
+		int move = NO_MOVE;
+		int assetAtPos = getAsset(direction, 1);
+		int nextAsset = UNMOVABLE;
+		
+		if(assetAtPos == EMPTY){
+			move = MOVE_PLAYER;
+			//need to adjust map
+		}else if(assetAtPos == BOX){
+			nextAsset = getAsset(direction, 2);
+			if(nextAsset == EMPTY){
+				//move box and player
+			}else if(nextAsset == EMPTY_GOAL){
+				//change empty goal to filled
+				//move box, box becomes filled goal
+				//move player 
+			}else{
+				move = NO_MOVE;
+			}
+		}else if(assetAtPos == FILLED_GOAL){
+			
+		}
+		return move;
+	}
+	/**
+	 * @param direction of movement to check for asset
+	 * @param steps is the number of grid points to look at
+	 * @return asset at that position
+	 */
+	private int getAsset(String direction, int steps){
+		int assetAtPos = UNMOVABLE;
+		//Always surrounded by a boundary, so never accesses 
+		//unauthorised data
 		switch(direction){
 		case "Left":
-
+			assetAtPos = this.mapRep[this.playerPosX+steps][this.playerPosY];
 			break;
 		case "Right":
-
+			assetAtPos = this.mapRep[this.playerPosX-steps][this.playerPosY];
 			break;
 		case "Up":
-
+			assetAtPos = this.mapRep[this.playerPosX][this.playerPosY-steps];
 			break;
 		case "Down":
-
+			assetAtPos = this.mapRep[this.playerPosX][this.playerPosY+steps];
 			break;
-		}
-		return NO_MOVE;
+		}	
+		return assetAtPos;
+	}
+	/**
+	 * adjust the asset placement on the map
+	 * @param direction of movement
+	 * @param asset to be moved
+	 * @param steps is the number of block points from the playerPos
+	 */
+	private void moveAsset(String direction, int asset, int steps){
+		switch(direction){
+		case "Left":
+			break;
+		case "Right":
+			break;
+		case "Up":
+			break;
+		case "Down":
+			break;
+		}		
 	}
 }
