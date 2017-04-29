@@ -22,7 +22,7 @@ public class GameSystem {
 		} else if (move == MOVE_PLAYER_BOX) { // update player position and box position
 			for (int i = 0; i < boxes.size(); i++) { // find box whose current position is in the direction of where the player wants to move
 				Box cur = boxes.get(i);
-				if (cur.getPosition.comparePosition(getAdjacentCoordinate(playerPos, direction)))
+				if (cur.getPosition.comparePosition(getAdjacentCoordinate(playerPos, direction))) // found the box
 					break;
 			}
 			player.move(direction);
