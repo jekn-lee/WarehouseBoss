@@ -53,37 +53,56 @@ public class Map {
 		
 		if(assetAtPos == EMPTY){
 			move = MOVE_PLAYER;
-			this.moveAsset(direction, PLAYER, 0);
-			//need to adjust map
+			this.setAsset(direction, PLAYER, 1);
 		}else if(assetAtPos == BOX){
 			nextAsset = getAsset(direction, 2);
 			if(nextAsset == EMPTY){
-				this.moveAsset(direction, BOX, 1);
-				this.moveAsset(direction, PLAYER, 0);
-				//move box and player
+				move = MOVE_PLAYER_BOX;
+				this.setAsset(direction, BOX, 2);
+				this.setAsset(direction, PLAYER, 1);
 			}else if(nextAsset == EMPTY_GOAL){
-				this.moveAsset(direction, FILLED_GOAL, 1);
-				this.moveAsset(direction, PLAYER, 0);
-				//change empty goal to filled
-				//move box, box becomes filled goal
-				//move player 
-			}else{
-				move = NO_MOVE;
+				move = MOVE_PLAYER_BOX;
+				this.setAsset(direction, FILLED_GOAL, 2);
+				this.setAsset(direction, PLAYER, 1);
 			}
 		}else if(assetAtPos == FILLED_GOAL){
 			nextAsset = getAsset(direction, 2);
 			if(nextAsset == EMPTY){
-				this.moveAsset(direction, BOX, 1);
-				this.moveAsset(direction, PLAYER, 0);
+				move = MOVE_PLAYER_BOX;
+				this.setAsset(direction, BOX, 2);
+				this.setAsset(direction, EMPTY_GOAL, 1);
 			} else if (nextAsset == EMPTY_GOAL){
-				this.moveAsset(direction, FILLED_GOAL, 1);
-				this.moveAsset(direction, PLAYER, 0);
-				//need something to check if where player is is empty goal
+				move = MOVE_PLAYER_BOX;
+				this.setAsset(direction, FILLED_GOAL, 2);
+				this.setAsset(direction, EMPTY_GOAL, 1);
 			} else {
 				move = NO_MOVE;
 			}
+		}else if(assetAtPos == EMPTY_GOAL){
+			move = MOVE_PLAYER;
 		}
+		
+		if((getAsset(direction, 0) == PLAYER) && (move != NO_MOVE)){
+			this.setAsset(direction, EMPTY, 0);
+		}
+		
+		if(move != NO_MOVE){
+			this.changePlayerPosition(direction);
+		}
+		
 		return move;
+	}
+	/**
+	 * Print the current state of the map 
+	 */
+	public void printMap(){
+		for(int i = 0; i<6; i++){
+			for(int k = 0; k<6; k++){
+				String s = mapRep[k][i] + " ";
+				System.out.print(s);
+			}
+			System.out.println();
+		}
 	}
 	/**
 	 * @param direction of movement to check for asset
@@ -110,36 +129,34 @@ public class Map {
 		}	
 		return assetAtPos;
 	}
+
 	/**
-	 * adjust the asset placement on the map
+	 * Set asset at given direction from player
 	 * @param direction of movement
 	 * @param asset to be moved
 	 * @param steps is the number of block points from the playerPos
 	 */
-	private void moveAsset(String direction, int asset, int steps){
+	private void setAsset(String direction, int asset, int steps){
 		switch(direction){
 		case "Left":
-			this.mapRep[this.playerPosX-steps][this.playerPosY] = EMPTY;
-			this.mapRep[this.playerPosX-steps-1][this.playerPosY] = asset;
+			this.mapRep[this.playerPosX-steps][this.playerPosY] = asset;
 			break;
 		case "Right":
-			this.mapRep[this.playerPosX+steps][this.playerPosY] = EMPTY;
-			this.mapRep[this.playerPosX+steps+1][this.playerPosY] = asset;
+			this.mapRep[this.playerPosX+steps][this.playerPosY] = asset;
 			break;
 		case "Up":
-			this.mapRep[this.playerPosX][this.playerPosY-steps] = EMPTY;
-			this.mapRep[this.playerPosX][this.playerPosY-steps-1] = asset;
+			this.mapRep[this.playerPosX][this.playerPosY-steps] = asset;
 			break;
 		case "Down":
-			this.mapRep[this.playerPosX][this.playerPosY+steps] = EMPTY;
-			this.mapRep[this.playerPosX][this.playerPosY+steps+1] = asset;
+			this.mapRep[this.playerPosX][this.playerPosY+steps] = asset;
 			break;
 		}
-		if (asset == PLAYER){
-			this.changePlayerPosition(direction);
-		}
 	}
-	
+	/**
+	 * Private method to adjust the player position
+	 * @param direction of movement
+	 * PRE-CONDITION: Player movement is possible
+	 */
 	private void changePlayerPosition(String direction){
 		switch(direction){
 		case "Left":
@@ -157,3 +174,77 @@ public class Map {
 		}
 	}
 }
+/**
+ * Checks if move in given direction is possible 
+ * @param directon of move
+ * @return int depending on movement
+ */
+/*	public int checkMove(String direction){
+	int move = NO_MOVE;
+	int assetAtPos = getAsset(direction, 1);
+	int nextAsset = UNMOVABLE;
+	
+	if(assetAtPos == EMPTY){
+		move = MOVE_PLAYER;
+		this.moveAsset(direction, PLAYER, 0);
+		//need to adjust map
+	}else if(assetAtPos == BOX){
+		nextAsset = getAsset(direction, 2);
+		if(nextAsset == EMPTY){
+			this.moveAsset(direction, BOX, 1);
+			this.moveAsset(direction, PLAYER, 0);
+			//move box and player
+		}else if(nextAsset == EMPTY_GOAL){
+			this.moveAsset(direction, FILLED_GOAL, 1);
+			this.moveAsset(direction, PLAYER, 0);
+			//change empty goal to filled
+			//move box, box becomes filled goal
+			//move player 
+		}else{
+			move = NO_MOVE;
+		}
+	}else if(assetAtPos == FILLED_GOAL){
+		nextAsset = getAsset(direction, 2);
+		if(nextAsset == EMPTY){
+			this.moveAsset(direction, BOX, 1);
+			this.moveAsset(direction, PLAYER, 0);
+		} else if (nextAsset == EMPTY_GOAL){
+			this.moveAsset(direction, FILLED_GOAL, 1);
+			this.moveAsset(direction, PLAYER, 0);
+			//need something to check if where player is is empty goal
+		} else {
+			move = NO_MOVE;
+		}
+	}
+	return move;
+}*/
+/**
+ * adjust the asset placement on the map
+ * @param direction of movement
+ * @param asset to be moved
+ * @param steps is the number of block points from the playerPos
+ */
+/*	private void moveAsset(String direction, int asset, int steps){
+	switch(direction){
+	case "Left":
+		this.mapRep[this.playerPosX-steps][this.playerPosY] = EMPTY;
+		this.mapRep[this.playerPosX-steps-1][this.playerPosY] = asset;
+		break;
+	case "Right":
+		this.mapRep[this.playerPosX+steps][this.playerPosY] = EMPTY;
+		this.mapRep[this.playerPosX+steps+1][this.playerPosY] = asset;
+		break;
+	case "Up":
+		this.mapRep[this.playerPosX][this.playerPosY-steps] = EMPTY;
+		this.mapRep[this.playerPosX][this.playerPosY-steps-1] = asset;
+		break;
+	case "Down":
+		this.mapRep[this.playerPosX][this.playerPosY+steps] = EMPTY;
+		this.mapRep[this.playerPosX][this.playerPosY+steps+1] = asset;
+		break;
+	}
+	if (asset == PLAYER){
+		this.changePlayerPosition(direction);
+	}
+}
+*/	
