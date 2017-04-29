@@ -35,10 +35,10 @@ public class Map {
 			this.mapRep[i][0] = UNMOVABLE;
 			this.mapRep[i][5] = UNMOVABLE;
 		}
-		this.mapRep[2][3] = BOX;
-		this.mapRep[2][4] =	BOX;
+		this.mapRep[3][2] = BOX;
+		this.mapRep[4][2] =	BOX;
 		
-		this.mapRep[4][3] = EMPTY_GOAL;
+		this.mapRep[3][4] = EMPTY_GOAL;
 		this.mapRep[4][4] = EMPTY_GOAL;
 	}
 	/**
@@ -96,6 +96,7 @@ public class Map {
 	 * Print the current state of the map 
 	 */
 	public void printMap(){
+		System.out.println();
 		for(int i = 0; i<6; i++){
 			for(int k = 0; k<6; k++){
 				String s = mapRep[k][i] + " ";
@@ -248,3 +249,4 @@ public class Map {
 	}
 }
 */	
+
