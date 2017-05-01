@@ -1,6 +1,10 @@
 
 public class GameSystem {
-
+	
+	private static final int NO_MOVE = 0;	
+	private static final int MOVE_PLAYER = 1;	
+	private static final int MOVE_PLAYER_BOX = 2;
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int nBox = 2; // predefined number of boxes/goals, need to extend where you specify this and generate a random map
