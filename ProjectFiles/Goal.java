@@ -1,4 +1,3 @@
-package com.example;
 
 /**
  * Created by kevin on 5/1/2017.
