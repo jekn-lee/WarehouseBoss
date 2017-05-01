@@ -1,24 +1,24 @@
+
 public class Player implements Asset  {
-    private Player player;
     private Position pos;
 
 
-    public Player() {
-        player = new Player();
+    public Player(int x, int y) {
+        this.pos = new Position(x ,y);
     }
 
     @Override
     public Position getPosition() {
-        return player.pos;
+        return this.pos;
     }
 
     @Override
     public void setPosition(Position p) {
-        player.pos = p;
+        this.pos = p;
     }
 
     @Override
     public void move(String direction) {
-        player.pos.changeCoordinate(direction);
+        this.pos.changeCoordinate(direction);
     }
 }
