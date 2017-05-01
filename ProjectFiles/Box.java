@@ -1,28 +1,27 @@
 
 public class Box implements Asset {
-    private Box box;
     private Position pos;
 
 
-    public Box() {
-        box = new Box();
+    public Box(int x, int y) {
+        this.pos = new Position(x,y);
     }
     @Override
     public Position getPosition() {
-        return box.pos;
+        return this.pos;
     }
 
     @Override
     public void setPosition(Position p) {
-        box.pos = p;
+        this.pos = p;
     }
 
     @Override
     public void move(String direction) {
-        box.pos.changeCoordinate(direction);
+        this.pos.changeCoordinate(direction);
     }
 
     public boolean atGoal(Position goal) {
-        return box.pos.compareCoordinate(box.pos,goal);
+        return this.pos.compareCoordinate(this.pos,goal);
     }
 }
