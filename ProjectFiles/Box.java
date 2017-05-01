@@ -20,6 +20,9 @@ public class Box implements Asset {
 
     @Override
     public void move(String direction) {
+        if (this.isAtGoal) {
+            this.isAtGoal = false;
+        }
         this.pos.changeCoordinate(direction);
     }
 
