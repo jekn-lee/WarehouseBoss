@@ -1,23 +1,20 @@
-
 public class Position {
-    
-    private Position pos;
+
     private int x;
     private int y;
 
 
     public Position(int x, int y) {
-        pos = new Position(x,y);
-        pos.x = x;
-        pos.y = y;
+        this.x = x;
+        this.y = y;
     }
 
     public int getX() {
-        return pos.x;
+        return this.x;
     }
 
     public int getY() {
-        return pos.y;
+        return this.y;
     }
 
     public boolean compareCoordinate(Position a, Position b) {
@@ -31,18 +28,16 @@ public class Position {
     public void changeCoordinate(String dir) {
         switch(dir){
             case "Left":
-                pos.x--;
+                this.x--;
                 break;
             case "Right":
-                pos.x++;
+                this.x++;
                 break;
             case "Up":
-                pos.y++;
+                this.y++;
                 break;
             case "Down":
-                pos.y--;
+                this.y--;
                 break;
         }
     }
-}
-
