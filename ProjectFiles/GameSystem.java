@@ -1,3 +1,7 @@
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class GameSystem {
 	
@@ -8,14 +12,16 @@ public class GameSystem {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int nBox = 2; // predefined number of boxes/goals, need to extend where you specify this and generate a random map
+		
 		Map m = new Map(); //current map constructor makes predefined map
-		Player player = new Player();
-		ArrayList<Goal> goals = new ArrayList<Goal>;
-		ArrayList<Box> boxes = new ArrayList<Box>;
-		goals.add(new Goal(3,2,false)); // TODO
-		goals.add(new Goal(4,2,false)); // TODO
-		boxes.add(new Box(3,4,false)); // TODO
-		boxes.add(new Box(4,4,false)); // TODO
+		
+		Player player = new Player(2,2);
+		ArrayList<Goal> goals = new ArrayList<Goal>();
+		ArrayList<Box> boxes = new ArrayList<Box>();
+		boxes.add(new Box(3,2,false));
+		boxes.add(new Box(4,2,false));
+		goals.add(new Goal(3,4,false));
+		goals.add(new Goal(4,4,false));
 		
 		Scanner sc = null;
 		try {
@@ -24,54 +30,85 @@ public class GameSystem {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println("Starting map:");
+		m.printMap();
 		while (sc.hasNextLine()) {
 			String direction = sc.nextLine();
 			makeMove(direction, player, m, boxes, goals);
-			if (!checkGameState) break;
+			m.printMap();
+			if (checkGameState(goals)) break;
 		}
-		System.out.println("YOU WIN!!!");
+		if (checkGameState(goals)) {
+			System.out.println("YOU WIN!!!");
+		} else {
+			System.out.println("YOU LOSE");
+		}
 	}
 
-	void makeMove(String direction, Player player, Map m, ArrayList<Box> boxes, ArrayList<Goal> goals) {	
+	static void makeMove(String direction, Player player, Map m, ArrayList<Box> boxes, ArrayList<Goal> goals) {	
 		Position playerPos = player.getPosition();
+		System.out.println("Player initially at (" + playerPos.getX() + "," + playerPos.getY() +")"); //TODO
 		int move = m.checkMove(direction);
+		
+		System.out.println(direction);
 		if (move == NO_MOVE) { //update nothing, remove later
+			System.out.println("Invalid move");
 		} else if (move == MOVE_PLAYER) { //update player position
+			System.out.println("Moved player only"); //TODO
+			Position newPlayerPos = getAdjacentCoordinate(playerPos, direction); // creating a new position object here
+			System.out.println("Player moved to (" + newPlayerPos.getX() + "," + newPlayerPos.getY() +")"); //TODO
 			player.move(direction);
 		} else if (move == MOVE_PLAYER_BOX) { // update player position and box position
+			System.out.println("Moved player and box"); //TODO
 			Position newPlayerPos = getAdjacentCoordinate(playerPos, direction);
+			System.out.println("Player moved to (" + newPlayerPos.getX() + "," + newPlayerPos.getY() +")"); //TODO
+			Box curBox = null;
+			Position originalBoxPos = null;
 			for (int i = 0; i < boxes.size(); i++) { // find box whose current position is in the direction of where the player wants to move
-				Box curBox = boxes.get(i);
-				Position originalBoxPos = curBox.getPosition();
-				if (originalBoxPos.comparePosition(newPlayerPos)) {// found the box
-					curBox.move(direction);
+				curBox = boxes.get(i);
+				originalBoxPos = curBox.clonePosition();
+				if (originalBoxPos.compareCoordinate(newPlayerPos)) {// found the box
+					System.out.println("Found box to move at (" + newPlayerPos.getX() + "," + newPlayerPos.getY() +")"); //TODO
+					curBox.move(direction); //TODO
 					break;
 				}
 			}
 			player.move(direction);
 			for (int i = 0; i < goals.size(); i++) {
 				Goal curGoal = goals.get(i);
-				if (goals.getPosition.comparePosition(curBox.getPosition())) { // moved box into goal
+				if (curGoal.getPosition().compareCoordinate(originalBoxPos)) { // moved box out of goal
+					System.out.println("Set goal at " + "(" + curGoal.getPosition().getX() + "," + curGoal.getPosition().getY() + ") as not satisfied"); //TODO
+					curGoal.setSatisfied(false);
+				}
+			}
+			for (int i = 0; i < goals.size(); i++) {
+				Goal curGoal = goals.get(i);
+				if (curGoal.getPosition().compareCoordinate(curBox.getPosition())) { // moved box into goal
+					System.out.println("Set goal at " + "(" + curGoal.getPosition().getX() + "," + curGoal.getPosition().getY() + ") as satisfied"); //TODO
 					curGoal.setSatisfied(true);
-				//} else if (goals.getPosition.comparePosition(originalBoxPos)) { // moved box out of goal
-				//	curGoal.setSatisfied(false);
-				//}
+				}
 			}
 		}
 	}
 
-	boolean checkGameState(ArrayList<Goal> goals) {
-		boolean finished = true;
-		for (i = 0 i < goals.size(); i++) {
-			if (goals.get(i).getSatisfied() == false) {
-				finished = false;
-				break;
+	static boolean checkGameState(ArrayList<Goal> goals) {
+		//boolean finished = true;
+		int counter = 0;
+		for (int i = 0; i < goals.size(); i++) {
+			if (goals.get(i).getSatisfied() == true) {
+				counter++;
+				//finished = false;
+				//break;
 			}
 		}
-		return finished;
+		//System.out.println(counter);
+		if (counter == goals.size()) {
+			return true;
+		}
+		return false;
 	}
 
-	private Position getAdjacentCoordinate(Position pos, String direction) {
+	static Position getAdjacentCoordinate(Position pos, String direction) {
 		int x = pos.getX();
 		int y = pos.getY();
 		switch(direction) {

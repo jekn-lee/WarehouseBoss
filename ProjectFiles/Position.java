@@ -8,7 +8,13 @@ public class Position {
         this.x = x;
         this.y = y;
     }
+    //
+    public Position(Position p) {
+    	this.x = p.x;
+    	this.y = p.y;
+    }
 
+    //
     public int getX() {
         return this.x;
     }
@@ -17,12 +23,20 @@ public class Position {
         return this.y;
     }
 
-    public boolean compareCoordinate(Position a, Position b) {
+    /*public boolean compareCoordinate(Position a, Position b) {
         if (a.x == b.x && a.y == b.y) {
             return  true;
         } else {
             return false;
         }
+    }*/
+    
+    public boolean compareCoordinate(Position p) {
+    	if (this.x == p.x && this.y == p.y) {
+    		return true;
+    	} else {
+    		return false;
+    	}
     }
 
     public void changeCoordinate(String dir) {
@@ -34,10 +48,11 @@ public class Position {
                 this.x++;
                 break;
             case "Up":
-                this.y++;
+                this.y--;
                 break;
             case "Down":
-                this.y--;
+                this.y++;
                 break;
         }
     }
+}

@@ -24,10 +24,19 @@ public class Box implements Asset {
             this.isAtGoal = false;
         }
         this.pos.changeCoordinate(direction);
+        System.out.println("Moved box to (" + this.pos.getX() + "," + this.pos.getY() + ")");
     }
+    
+    //
+    public Position clonePosition() {
+    	Position p = new Position(this.pos);
+    	return p;
+    }
+    //
 
     public boolean atGoal(Position goal) {
-        return this.pos.compareCoordinate(this.pos,goal);
+    	return this.pos.compareCoordinate(goal);
+        //return this.pos.compareCoordinate(this.pos,goal);
     }
 
     public boolean getGoalState() {
