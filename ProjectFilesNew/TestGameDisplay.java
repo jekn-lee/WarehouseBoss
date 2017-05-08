@@ -1,9 +1,11 @@
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
-public class TestGameDisplay extends JFrame{
+public class TestGameDisplay extends JFrame implements KeyListener{
 	/**
 	 * 
 	 */
@@ -22,6 +24,8 @@ public class TestGameDisplay extends JFrame{
 	    this.filledGoal = new ImageIcon("filledGoal.png");
 	    this.emptyGoal = new ImageIcon("emptyGoal.png");
 	    this.empty = new ImageIcon("empty.png");
+	    addKeyListener(this);
+	    setFocusable(true);
 	}
 	public void displayCurrent(ArrayList<Integer> map){
 		prepareGUI(map);
@@ -79,4 +83,33 @@ public class TestGameDisplay extends JFrame{
 	    	}
 	    }
 	}
+
+	/*
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		int code = e.getKeyCode();
+		if (code == KeyEvent.VK_DOWN){
+			this.ex.displayCurrent(test.getCurrMap("Down"));
+		} else if (code == KeyEvent.VK_UP){
+			this.ex.displayCurrent(test.getCurrMap("Up"));
+		} else if (code == KeyEvent.VK_LEFT){
+			this.ex.displayCurrent(test.getCurrMap("Left"));
+		} else if (code == KeyEvent.VK_RIGHT){
+			this.ex.displayCurrent(test.getCurrMap("Right"));
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	*/
 }
