@@ -23,7 +23,11 @@ public class GameSystem {
 		this.goals.add(new Goal(3,4,false));
 		this.goals.add(new Goal(4,4,false));
 	}
-	
+	public ArrayList<Integer> getNewMap(){
+		ArrayList<Integer> rep = new ArrayList<Integer>();
+		rep = this.m.getArrayRep();
+		return rep;
+	}
 	public ArrayList<Integer> getCurrMap(String move){ //current map constructor makes predefined map
 		
 		makeMove(move, this.player, this.m, this.boxes, this.goals);
