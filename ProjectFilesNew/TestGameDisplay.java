@@ -15,16 +15,17 @@ public class TestGameDisplay extends JFrame{
     ImageIcon emptyGoal;
     ImageIcon empty;
     
-	public TestGameDisplay(ArrayList<Integer> map){
+	public TestGameDisplay(){
 	    this.box = new ImageIcon("box.png");
 	    this.player = new ImageIcon("player.png");
 	    this.boundary = new ImageIcon("boundary.png");
 	    this.filledGoal = new ImageIcon("filledGoal.png");
 	    this.emptyGoal = new ImageIcon("emptyGoal.png");
 	    this.empty = new ImageIcon("empty.png");
+	}
+	public void displayCurrent(ArrayList<Integer> map){
 		prepareGUI(map);
 	}
-	
 	private void prepareGUI(ArrayList<Integer> map){
 	    JFrame mainFrame = new JFrame("Game Display");
 	    mainFrame.setSize(800,800);
