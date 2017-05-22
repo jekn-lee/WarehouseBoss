@@ -90,39 +90,6 @@ public class Map {
 		
 	}
 	
-	public boolean checkNewMap(){
-		int x = 0;
-		int y = 0;
-		int sum = 0;
-		while (y<this.yLength){
-			x = 0;
-			while (x < this.xLength){
-				sum+=this.Map[y][x];
-				x++;
-			}
-			y++;
-		}
-		if (sum == this.yLength * this.xLength){
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	public boolean checkForZero(int xStart, int yStart, int xSize, int ySize){
-		int y = yStart;
-		int x = xStart;
-		while (y < (yStart + yLength) && y != (this.yLength-1)){
-			x = xStart;
-			while (x < (xStart + xLength) && x != (this.xLength-1)){
-				if (this.Map[y][x] == 0) return true;
-				x++;
-			}
-			y++;
-		}
-		return false;
-	}
-	
 	public boolean checkValidityRow(){
 		int x = 0;
 		int y = 1;
