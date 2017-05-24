@@ -89,7 +89,7 @@ public class Background {
 				this.insertOneBoundary(xBegin, yBegin);
 			}
 		}
-		this.printMap();
+		//this.printMap();
 	}
 	
 	private boolean checkValidityRow(){
