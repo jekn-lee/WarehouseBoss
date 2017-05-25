@@ -45,7 +45,14 @@ public class MapSystem {
 	
 	public MapSystem(int xLength, int yLength, int boxes){
 		
-		this.backgroundRep = new Background(xLength,yLength);
+		Background template = new Background(xLength, yLength);
+		if (template.getxLength() == 7 && template.getyLength() == 7){
+			this.backgroundRep = template.addPaddingEasy();
+		} else if (template.getxLength() == 10 && template.getyLength() == 10){
+			this.backgroundRep = template.addPaddingMedium();
+		} else {
+			this.backgroundRep = template.addPaddingHard();
+		}
 		//TODO call actual Map function
 		//TODO populate player, boxes, goals
 		this.mapRep = new Map(this.backgroundRep.getMap(), 
