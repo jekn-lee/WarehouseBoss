@@ -2,52 +2,6 @@ import java.util.Random;
 
 public class Background {
 
-	public int getxLength() {
-		return xLength;
-	}
-
-
-
-	public void setxLength(int xLength) {
-		this.xLength = xLength;
-	}
-
-
-
-	public int getyLength() {
-		return yLength;
-	}
-
-
-
-	public void setyLength(int yLength) {
-		this.yLength = yLength;
-	}
-
-
-
-	public int getxBoxLength() {
-		return xBoxLength;
-	}
-
-
-
-	public void setxBoxLength(int xBoxLength) {
-		this.xBoxLength = xBoxLength;
-	}
-
-
-
-	public int getyBoxLength() {
-		return yBoxLength;
-	}
-
-
-
-	public void setyBoxLength(int yBoxLength) {
-		this.yBoxLength = yBoxLength;
-	}
-
 	private int mapRep[][];
 	private int xLength;
 	private int yLength;
@@ -89,7 +43,6 @@ public class Background {
 				this.insertOneBoundary(xBegin, yBegin);
 			}
 		}
-		//this.printMap();
 	}
 	
 	private boolean checkValidityRow(){
@@ -198,6 +151,38 @@ public class Background {
 		this.mapRep = map;
 	}
 	
+	public int getxLength() {
+		return xLength;
+	}
+
+	public void setxLength(int xLength) {
+		this.xLength = xLength;
+	}
+
+	public int getyLength() {
+		return yLength;
+	}
+
+	public void setyLength(int yLength) {
+		this.yLength = yLength;
+	}
+
+	public int getxBoxLength() {
+		return xBoxLength;
+	}
+
+	public void setxBoxLength(int xBoxLength) {
+		this.xBoxLength = xBoxLength;
+	}
+
+	public int getyBoxLength() {
+		return yBoxLength;
+	}
+
+	public void setyBoxLength(int yBoxLength) {
+		this.yBoxLength = yBoxLength;
+	}
+	
 	private void setTMap(){
 		int width = this.xLength / 6;
 		int height = this.yLength / 6;
@@ -231,6 +216,70 @@ public class Background {
 			x++;
 		}
 	}
-
+	
+	private int[][] mapPadding(){
+		int x = 0;
+		int y = 0;
+		int[][] map = new int[15][15];
+		
+		while (y < 15){
+			x = 0;
+			while (x < 15){
+				map[y][x] = 1;
+				x++;
+			}
+			y++;
+		}
+		
+		return map;
+	}
+	
+	public Background addPaddingEasy(){
+		Background newMap = new Background(15, 15);
+		newMap.mapRep = this.mapPadding();
+		int x = 3;
+		int y = 3;
+		while (y < 10){
+			x = 3;
+			while (x < 10){
+				newMap.mapRep[y][x] = this.mapRep[y-3][x-3];
+				x++;
+			}
+			y++;
+		}
+		return newMap;
+	}
+	
+	public Background addPaddingMedium(){
+		Background newMap = new Background(15,15);
+		newMap.mapRep = this.mapPadding();
+		int x = 2;
+		int y = 2;
+		while (y < 12){
+			x = 2;
+			while (x < 12){
+				newMap.mapRep[y][x] = this.mapRep[y-2][x-2];
+				x++;
+			}
+			y++;
+		}
+		return newMap;
+	}
+	
+	public Background addPaddingHard(){
+		Background newMap = new Background(15,15);
+		newMap.mapRep = this.mapPadding();
+		int x = 1;
+		int y = 4;
+		while (y < 11){
+			x = 1;
+			while (x < 13){
+				newMap.mapRep[y][x] = this.mapRep[y-4][x-1];
+				x++;
+			}
+			y++;
+		}
+		return newMap;
+	}
 }
 
