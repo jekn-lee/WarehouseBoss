@@ -50,9 +50,12 @@ public class Map{
 	public Map(ArrayList<Integer> map) {
 		this.mapRep = new int[15][15];
 		for (int i = 0; i < map.size(); i++) {
-			int X = i/15;
-			int Y = i%15;
-			this.mapRep[Y][X] = map.get(i);
+			int X = i/16;
+			int Y = i%16;
+			
+			if (map.get(i) != 6){
+				this.mapRep[Y][X] = map.get(i);
+			}
 			if (map.get(i) == PLAYER) {
 				playerPosX = X;
 				playerPosY = Y;
